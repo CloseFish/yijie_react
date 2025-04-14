@@ -6,9 +6,9 @@ import Input from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-// 修改 setCurrentPage 的参数类型，添加 'garbage1'
+// 修改 setCurrentPage 的参数类型，添加 'garbage1' 和 'garbage2'
 interface YijieMainPageProps {
-	setCurrentPage: (page: 'home' | 'yijie' | 'garbage1') => void;
+	setCurrentPage: (page: 'home' | 'yijie' | 'garbage1' | 'garbage2') => void;
 }
 
 const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) => {
@@ -81,6 +81,12 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 	const handleJumpToGarbageInterface1 = () => {
 		setTimeout(() => {
 			setCurrentPage('garbage1'); // 0.5秒后跳转到 垃圾界面1
+		}, 500);
+	};
+
+	const handleJumpToGarbageInterface2 = () => {
+		setTimeout(() => {
+			setCurrentPage('garbage2'); // 0.5秒后跳转到 垃圾界面2
 		}, 500);
 	};
 
@@ -248,6 +254,15 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 															className="mt-0 ml-4"
 														>
 															跳转到 智能家居界面
+														</Button>
+													)}
+													{/* 判断是否为第四次 AI 回复并显示跳转按钮 */}
+													{!msg.isUser && responseIndex === 4 && index === messages.length - 1 && (
+														<Button
+															onClick={handleJumpToGarbageInterface2}
+															className="mt-0 ml-4"
+														>
+															跳转到 垃圾界面2
 														</Button>
 													)}
 												</div>
