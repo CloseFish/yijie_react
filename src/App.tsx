@@ -23,7 +23,7 @@ const App: React.FC = () => {
 						{currentPage === 'devices' && <DevicePage />}
 						{currentPage === 'login' && <LoginPage setCurrentPage={setCurrentPage} />}
 						{currentPage === 'analysis' && <AnalysisPage />}
-						{currentPage === 'smart' && <SmartPage />}
+						{currentPage === 'smart' && <SmartPage setCurrentPage={setCurrentPage} />}
 						{currentPage === 'yijie' && <YijieMainPage setCurrentPage={setCurrentPage} />}
 						{/* 其他页面 */}
 					</main>

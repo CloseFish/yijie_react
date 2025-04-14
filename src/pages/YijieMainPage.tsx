@@ -243,7 +243,7 @@ const YijieMainPage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) => {
 															setTimeout(() => {
 																setMessages((prev) => [...prev, { text: "好的，正在生成智能家居界面，请稍候", isUser: false }]);
 																setTimeout(() => {
-																	setCurrentPage('home');
+																	setCurrentPage('smart');
 																}, 2000);
 															}, 500);
 														}}
@@ -263,7 +263,7 @@ const YijieMainPage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) => {
 															setTimeout(() => {
 																setMessages((prev) => [...prev, { text: "好的，正在生成智能家居界面，请稍候", isUser: false }]);
 																setTimeout(() => {
-																	setCurrentPage('home');
+																	setCurrentPage('smart');
 																}, 2000);
 															}, 500);
 														}}

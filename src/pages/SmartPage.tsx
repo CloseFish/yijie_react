@@ -1,10 +1,21 @@
 import React from "react";
 import './styles.css';
+import { Dispatch, SetStateAction } from "react";
 
-const SmartPage = () => {
+interface SmartPageProps {
+	setCurrentPage: Dispatch<SetStateAction<'yijie' | 'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart'>>;
+}
+
+const SmartPage: React.FC<SmartPageProps> = ({ setCurrentPage }) => {
+	const handleClick = () => {
+		setTimeout(() => {
+			setCurrentPage('home');
+		}, 500);
+	};
+
 	return (
 		<div className="flex h-screen">
-			<div className="flex-1 bg-cover bg-center left-background relative" style={{ 
+			<div className="flex-1 bg-cover bg-center left-background relative" style={{
 				backgroundImage: "url('/images/smart_home_login_page_background.jpg')",
 				backgroundSize: 'cover',
 				backgroundPosition: 'center',
@@ -37,7 +48,13 @@ const SmartPage = () => {
 						<label htmlFor="password" className="block text-gray-700 text-base mb-2">密码</label>
 						<input type="password" id="password" className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500" />
 					</div>
-					<button type="submit" className="w-full py-3 mt-4 bg-[#2D5A27] text-white text-lg rounded-md hover:bg-green-800 focus:outline-none">登录</button>
+					<button
+						type="button"
+						className="w-full py-3 mt-4 bg-[#2D5A27] text-white text-lg rounded-md hover:bg-green-800 focus:outline-none"
+						onClick={handleClick}
+					>
+						切换到主页
+					</button>
 				</form>
 				<div className="mt-6">
 					<a href="#" className="text-sm text-gray-600 hover:text-gray-800">忘记密码？</a>
