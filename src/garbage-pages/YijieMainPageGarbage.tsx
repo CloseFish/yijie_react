@@ -6,23 +6,37 @@ import Input from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
+// 修改 setCurrentPage 的参数类型，添加 'garbage1'
 interface YijieMainPageProps {
-	setCurrentPage: (page: 'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'yijie') => void;
+	setCurrentPage: (page: 'home' | 'yijie' | 'garbage1') => void;
 }
 
 const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) => {
+	// 从 localStorage 中读取聊天记录和回复索引
+	const storedMessages = localStorage.getItem('chatMessages');
+	const storedResponseIndex = localStorage.getItem('responseIndex');
+	const storedThirdResponseIndex = localStorage.getItem('thirdResponseIndex');
+
 	const [greeting, setGreeting] = useState<string>("");
 	const [userInput, setUserInput] = useState<string>(""); // 保存输入框内容
-	const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([
-		{ text: "你好！我是翌界 AI 助手，请告诉我你想要的界面设计风格，我会为你生成完美的用户界面。", isUser: false }
-	]); // 用户发过的消息列表
+	const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>(
+		storedMessages ? JSON.parse(storedMessages) : [
+			{ text: "你好！我是翌界 AI 助手，请告诉我你想要的界面设计风格，我会为你生成完美的用户界面。", isUser: false }
+		]
+	); // 用户发过的消息列表
+	const [responseIndex, setResponseIndex] = useState<number>(
+		storedResponseIndex ? parseInt(storedResponseIndex, 10) : 0
+	);
+	const [thirdResponseIndex, setThirdResponseIndex] = useState<number | null>(
+		storedThirdResponseIndex ? parseInt(storedThirdResponseIndex, 10) : null
+	);
+
 	const aiResponses = [
 		"好的！您希望这个界面包含哪些内容呢？",
 		"好的，我将为您生成智能家具界面。根据您的需求，智能家居界面要包含常用设备开关与数据监测统计功能。请问您家中一共有哪些智能家具设备呢？",
 		"好的。正在为您生成智能家居界面。",
 		"好的！我将为您在主页轮播家中智能摄像头的实时画面，并对整个房间的耗电量进行实时监控，实现对家庭设备的实时检测与控制。"
 	];
-	const [responseIndex, setResponseIndex] = useState(0);
 
 	useEffect(() => {
 		updateGreeting();
@@ -41,16 +55,45 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 
 	const handleSend = () => {
 		if (userInput.trim() !== "") {
-			setMessages((prev) => [...prev, { text: userInput, isUser: true }]); // 添加用户消息
-			setUserInput(""); // 清空输入框
-			// 添加自动回复
-			if (responseIndex < aiResponses.length) {
-				setTimeout(() => {
-					setMessages((prev) => [...prev, { text: aiResponses[responseIndex], isUser: false }]);
-					setResponseIndex(responseIndex + 1);
-				}, 500);
-			}
+			setMessages((prev) => {
+				const newMessages = [...prev, { text: userInput, isUser: true }];
+				setUserInput(""); // 清空输入框
+				// 添加自动回复
+				if (responseIndex < aiResponses.length) {
+					setTimeout(() => {
+						const updatedMessages = [...newMessages, { text: aiResponses[responseIndex], isUser: false }];
+						setMessages(updatedMessages);
+						if (responseIndex === 2) {
+							setThirdResponseIndex(updatedMessages.length - 1);
+							localStorage.setItem('thirdResponseIndex', (updatedMessages.length - 1).toString());
+						}
+						setResponseIndex(responseIndex + 1);
+						// 保存更新后的聊天记录和回复索引到 localStorage
+						localStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
+						localStorage.setItem('responseIndex', (responseIndex + 1).toString());
+					}, 500);
+				}
+				return newMessages;
+			});
 		}
+	};
+
+	const handleJumpToGarbageInterface1 = () => {
+		setTimeout(() => {
+			setCurrentPage('garbage1'); // 0.5秒后跳转到 垃圾界面1
+		}, 500);
+	};
+
+	const handleNewConversation = () => {
+		const initialMessages = [
+			{ text: "你好！我是翌界 AI 助手，请告诉我你想要的界面设计风格，我会为你生成完美的用户界面。", isUser: false }
+		];
+		setMessages(initialMessages);
+		setResponseIndex(0);
+		setThirdResponseIndex(null);
+		localStorage.setItem('chatMessages', JSON.stringify(initialMessages));
+		localStorage.setItem('responseIndex', '0');
+		localStorage.setItem('thirdResponseIndex', 'null');
 	};
 
 	return (
@@ -116,6 +159,7 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 											variant="ghost"
 											size="icon"
 											className="!rounded-button hover:bg-blue-50 w-16 h-16 flex items-center justify-center"
+											onClick={handleNewConversation}
 										>
 											<i className="fas fa-plus text-gray-600 text-3xl"></i>
 										</Button>
@@ -195,8 +239,17 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 														/>
 													</Avatar>
 												)}
-												<div className={`rounded-2xl p-6 shadow-sm max-w-[70%] ${msg.isUser ? 'bg-blue-500 text-white' : 'bg-white'}`}>
+												<div className={`rounded-2xl p-6 shadow-sm max-w-[70%] ${msg.isUser ? 'bg-blue-500 text-white' : 'bg-white'}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
 													<p className="text-xl text-left">{msg.text}</p>
+													{/* 判断是否为第三次 AI 回复并显示跳转按钮 */}
+													{!msg.isUser && index === thirdResponseIndex && (
+														<Button
+															onClick={handleJumpToGarbageInterface1}
+															className="mt-0 ml-4"
+														>
+															跳转到 智能家居界面
+														</Button>
+													)}
 												</div>
 												{msg.isUser && (
 													<Avatar className="w-12 h-12">
@@ -245,13 +298,24 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 														variant="outline"
 														className="bg-white/80 hover:bg-blue-50 rounded-xl py-4 px-10 text-xl w-[240px]"
 														onClick={() => {
-															setMessages((prev) => [...prev, { text: style, isUser: true }]);
-															setTimeout(() => {
+															setMessages((prev) => {
+																const newMessages = [...prev, { text: style, isUser: true }];
 																if (responseIndex < aiResponses.length) {
-																	setMessages((prev) => [...prev, { text: aiResponses[responseIndex], isUser: false }]);
-																	setResponseIndex(responseIndex + 1);
+																	setTimeout(() => {
+																		const updatedMessages = [...newMessages, { text: aiResponses[responseIndex], isUser: false }];
+																		setMessages(updatedMessages);
+																		if (responseIndex === 2) {
+																			setThirdResponseIndex(updatedMessages.length - 1);
+																			localStorage.setItem('thirdResponseIndex', (updatedMessages.length - 1).toString());
+																		}
+																		setResponseIndex(responseIndex + 1);
+																		// 保存更新后的聊天记录和回复索引到 localStorage
+																		localStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
+																		localStorage.setItem('responseIndex', (responseIndex + 1).toString());
+																	}, 500);
 																}
-															}, 500);
+																return newMessages;
+															});
 														}}
 													>
 														{style}
@@ -259,19 +323,30 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 												))}
 											</div>
 											<div className="flex gap-4 justify-center">
-												{["深色主题界面", "智能家居界面"].map((style, i) => (
+												{["深色主题界面", "智慧办公界面"].map((style, i) => (
 													<Button
 														key={i + 3}
 														variant="outline"
 														className="bg-white/80 hover:bg-blue-50 rounded-xl py-4 px-10 text-xl w-[240px]"
 														onClick={() => {
-															setMessages((prev) => [...prev, { text: style, isUser: true }]);
-															setTimeout(() => {
+															setMessages((prev) => {
+																const newMessages = [...prev, { text: style, isUser: true }];
 																if (responseIndex < aiResponses.length) {
-																	setMessages((prev) => [...prev, { text: aiResponses[responseIndex], isUser: false }]);
-																	setResponseIndex(responseIndex + 1);
+																	setTimeout(() => {
+																		const updatedMessages = [...newMessages, { text: aiResponses[responseIndex], isUser: false }];
+																		setMessages(updatedMessages);
+																		if (responseIndex === 2) {
+																			setThirdResponseIndex(updatedMessages.length - 1);
+																			localStorage.setItem('thirdResponseIndex', (updatedMessages.length - 1).toString());
+																		}
+																		setResponseIndex(responseIndex + 1);
+																		// 保存更新后的聊天记录和回复索引到 localStorage
+																		localStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
+																		localStorage.setItem('responseIndex', (responseIndex + 1).toString());
+																	}, 500);
 																}
-															}, 500);
+																return newMessages;
+															});
 														}}
 													>
 														{style}
