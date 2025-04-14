@@ -10,7 +10,7 @@ const Header: React.FC<HeaderProps> = ({ currentPage, setCurrentPage }) => {
 	return (
 		<header className="flex flex-col items-center justify-between p-4 border-b border-[#c4b7a6]">
 			{/* 第一行：导航按钮 */}
-			<div className="flex justify-between w-full">
+			{/*	<div className="flex justify-between w-full">
 				<div className="flex space-x-4">
 					<Button
 						variant="ghost"
@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({ currentPage, setCurrentPage }) => {
 						翌界
 					</Button>
 				</div>
-			</div>
+			</div>	*/}
 			{/* 第二行：图标和文字，仅在非登录页面显示 */}
 			{currentPage !== 'login' && currentPage !== 'smart' && currentPage !== 'yijie' && (
 				<div className="flex justify-between w-full mt-4">
