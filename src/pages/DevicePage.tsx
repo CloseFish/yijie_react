@@ -25,6 +25,7 @@ import SmartLockModal from "../components/modals/SmartLockModal";
 import CurtainModal from "../components/modals/CurtainModal";
 import HeatingModal from "../components/modals/HeatingModal";
 import FanModal from "../components/modals/FanModal";
+import RiceCookerModal from "../components/modals/RiceCookerModal"; // 导入 RiceCookerModal
 import {
 	DndContext,
 	closestCenter,
@@ -81,6 +82,7 @@ const DevicePage: React.FC = () => {
 	const [isCurtainModalOpen, setIsCurtainModalOpen] = useState(false);
 	const [isHeatingModalOpen, setIsHeatingModalOpen] = useState(false);
 	const [isFanModalOpen, setIsFanModalOpen] = useState(false);
+	const [isRiceCookerModalOpen, setIsRiceCookerModalOpen] = useState(false); // 添加电饭煲模态框显示状态
 
 	// 新增地暖相关状态
 	const [selectedRoom, setSelectedRoom] = useState('livingRoom');
@@ -213,6 +215,9 @@ const DevicePage: React.FC = () => {
 												case "电风扇":
 													setIsFanModalOpen(true);
 													break;
+												case "电饭煲":
+													setIsRiceCookerModalOpen(true);
+													break;
 												default:
 													console.log(`Open ${deviceName} Modal`);
 											}
@@ -283,8 +288,12 @@ const DevicePage: React.FC = () => {
 				isFanOn={devices.电风扇}
 				toggleFan={(value) => toggleDevice("电风扇", value)}
 			/>
+			<RiceCookerModal
+				isOpen={isRiceCookerModalOpen}
+				onClose={() => setIsRiceCookerModalOpen(false)}
+			/>
 		</div>
 	);
 };
 
-export default DevicePage;
+export default DevicePage;    
