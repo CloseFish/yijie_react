@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+// ChatModal.tsx
+import React, { useState, useContext } from 'react';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Button from '../ui/button';
-import { useContext } from 'react';
 
 // 假设 DevicePage 的状态和函数可以通过上下文传递
 const DeviceContext = React.createContext({
 	devices: {},
-	setDevices: () => { },
+	setDevices: (devices: { [key: string]: boolean }) => { }, // 确保这里接受一个参数
 	isTVModalOpen: false,
-	// 修改为接收布尔参数的函数
 	setIsTVModalOpen: (value: boolean) => { },
 	isFridgeModalOpen: false,
 	setIsFridgeModalOpen: (value: boolean) => { },
@@ -70,7 +69,6 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose }) => {
 			// 根据用户输入打开对应的 Modal
 			switch (inputValue) {
 				case "电视":
-					console.log('Setting TV modal open');
 					setIsTVModalOpen(true);
 					break;
 				case "冰箱":
@@ -128,9 +126,8 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose }) => {
 					{messages.map((message, index) => (
 						<div key={index} className={`flex ${message.isUser ? 'justify-end' : ''}`}>
 							<div
-								className={`rounded-lg p-3 shadow-sm ${message.isUser ? 'bg-[#2D5A27] text-white' : 'bg-white text-[#1F2973]'
-									}`}
-							>
+								className={`rounded-lg p-3 shadow-sm ${message.isUser ? 'bg-[#2D5A27] text-white' : 'bg-white text-[#1F2973]'}`
+								}>
 								<p>{message.text}</p>
 							</div>
 						</div>
