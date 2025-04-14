@@ -2,11 +2,11 @@ import React from 'react';
 import Button from '../../components/ui/button';
 
 interface HeaderProps {
-	currentPage: 'yijie' | 'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'garbage1' | 'garbage2';
-	setCurrentPage: React.Dispatch<React.SetStateAction<'yijie' | 'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'garbage1' | 'garbage2'>>;
+	currentPage: 'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'yijie' | 'garbage1' | 'garbage2';
+	setCurrentPage: React.Dispatch<React.SetStateAction<'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'yijie' | 'garbage1' | 'garbage2'>>;
 }
 
-const GarbageHeader1: React.FC<HeaderProps> = ({ currentPage, setCurrentPage }) => {
+const Header: React.FC<HeaderProps> = ({ currentPage, setCurrentPage }) => {
 	return (
 		<header className="flex flex-col items-center justify-between p-4 border-b border-[#c4b7a6]">
 			{/* 第一行：导航按钮 */}
@@ -57,7 +57,7 @@ const GarbageHeader1: React.FC<HeaderProps> = ({ currentPage, setCurrentPage }) 
 				</div>
 			</div>	*/}
 			{/* 第二行：图标和文字，仅在非登录页面显示 */}
-			{currentPage !== 'yijie' && (
+			{currentPage !== 'login' && currentPage !== 'smart' && currentPage !== 'yijie' && (
 				<div className="flex justify-between w-full mt-4">
 					<div className="flex items-center space-x-2">
 						<span className="text-xl font-bold">SmartHome</span>
@@ -74,4 +74,4 @@ const GarbageHeader1: React.FC<HeaderProps> = ({ currentPage, setCurrentPage }) 
 	);
 };
 
-export default GarbageHeader1;
+export default Header;

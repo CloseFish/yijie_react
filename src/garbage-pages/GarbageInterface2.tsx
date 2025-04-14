@@ -18,7 +18,7 @@ import LightModal from "../components/modals/LightModal";
 import ThermostatModal from "../components/modals/ThermostatModal";
 
 interface GarbageInterface1Props {
-	setCurrentPage: React.Dispatch<React.SetStateAction<'garbage2' | 'home' | 'yijie' | 'garbage1'>>;
+	setCurrentPage: React.Dispatch<React.SetStateAction<'yijie' | 'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'garbage1' | 'garbage2'>>;
 }
 
 const GarbageInterface2: React.FC<GarbageInterface1Props> = ({ setCurrentPage }) => {
@@ -87,7 +87,7 @@ const GarbageInterface2: React.FC<GarbageInterface1Props> = ({ setCurrentPage })
 	};
 
 	const [activeCamera, setActiveCamera] = useState("C1");
-	
+
 	const handleBackToYijie = () => {
 		setCurrentPage('yijie');
 	};

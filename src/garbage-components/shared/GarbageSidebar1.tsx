@@ -4,8 +4,8 @@ import Button from '../../components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 interface SidebarProps {
-	currentPage: 'home' | 'yijie' | 'garbage1' | 'garbage2';
-	setCurrentPage: React.Dispatch<React.SetStateAction<'home' | 'yijie' | 'garbage1' | 'garbage2'>>;
+	currentPage: 'yijie' | 'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'garbage1' | 'garbage2';
+	setCurrentPage: React.Dispatch<React.SetStateAction<'yijie' | 'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'garbage1' | 'garbage2'>>;
 }
 
 const GarbageSidebar1: React.FC<SidebarProps> = ({ currentPage, setCurrentPage }) => {

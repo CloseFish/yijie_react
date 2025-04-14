@@ -14,7 +14,7 @@ const Page = () => {
         <React.StrictMode>
           {/* 注释原来的 App 渲染 */}
           {/* <App /> */}
-          <AppGarbage /> // 渲染 AppGarbage 组件
+          <AppGarbage />
         </React.StrictMode>
       );
     }

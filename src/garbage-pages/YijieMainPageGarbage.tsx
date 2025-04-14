@@ -6,7 +6,7 @@ import Input from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-// 修改 setCurrentPage 的参数类型，添加 'garbage1' 和 'garbage2'
+// 修改 setCurrentPage 的参数类型，添加 'garbage1'、'garbage2' 和 'myHomePage'
 interface YijieMainPageProps {
 	setCurrentPage: (page: 'home' | 'yijie' | 'garbage1' | 'garbage2') => void;
 }
@@ -16,6 +16,8 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 	const storedMessages = localStorage.getItem('chatMessages');
 	const storedResponseIndex = localStorage.getItem('responseIndex');
 	const storedThirdResponseIndex = localStorage.getItem('thirdResponseIndex');
+	const storedButtonIndices = localStorage.getItem('buttonIndices');
+	const parsedButtonIndices = storedButtonIndices ? JSON.parse(storedButtonIndices) : [];
 
 	const [greeting, setGreeting] = useState<string>("");
 	const [userInput, setUserInput] = useState<string>(""); // 保存输入框内容
@@ -30,6 +32,7 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 	const [thirdResponseIndex, setThirdResponseIndex] = useState<number | null>(
 		storedThirdResponseIndex ? parseInt(storedThirdResponseIndex, 10) : null
 	);
+	const [buttonIndices, setButtonIndices] = useState<number[]>(parsedButtonIndices);
 
 	const aiResponses = [
 		"好的！您希望这个界面包含哪些内容呢？",
@@ -43,6 +46,13 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 	useEffect(() => {
 		updateGreeting();
 	}, []);
+
+	useEffect(() => {
+		localStorage.setItem('chatMessages', JSON.stringify(messages));
+		localStorage.setItem('responseIndex', responseIndex.toString());
+		localStorage.setItem('thirdResponseIndex', thirdResponseIndex ? thirdResponseIndex.toString() : 'null');
+		localStorage.setItem('buttonIndices', JSON.stringify(buttonIndices));
+	}, [messages, responseIndex, thirdResponseIndex, buttonIndices]);
 
 	const updateGreeting = () => {
 		const hour = new Date().getHours();
@@ -67,12 +77,11 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 						setMessages(updatedMessages);
 						if (responseIndex === 2) {
 							setThirdResponseIndex(updatedMessages.length - 1);
-							localStorage.setItem('thirdResponseIndex', (updatedMessages.length - 1).toString());
+						}
+						if (responseIndex >= 4) {
+							setButtonIndices(prevIndices => [...prevIndices, updatedMessages.length - 1]);
 						}
 						setResponseIndex(responseIndex + 1);
-						// 保存更新后的聊天记录和回复索引到 localStorage
-						localStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
-						localStorage.setItem('responseIndex', (responseIndex + 1).toString());
 					}, 500);
 				}
 				return newMessages;
@@ -92,6 +101,12 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 		}, 500);
 	};
 
+	const handleJumpToMyHomePage = () => {
+		setTimeout(() => {
+			setCurrentPage('home'); // 0.5秒后跳转到 MyHomePage
+		}, 500);
+	};
+
 	const handleNewConversation = () => {
 		const initialMessages = [
 			{ text: "你好！我是翌界 AI 助手，请告诉我你想要的界面设计风格，我会为你生成完美的用户界面。", isUser: false }
@@ -99,9 +114,11 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 		setMessages(initialMessages);
 		setResponseIndex(0);
 		setThirdResponseIndex(null);
+		setButtonIndices([]);
 		localStorage.setItem('chatMessages', JSON.stringify(initialMessages));
 		localStorage.setItem('responseIndex', '0');
 		localStorage.setItem('thirdResponseIndex', 'null');
+		localStorage.setItem('buttonIndices', '[]');
 	};
 
 	return (
@@ -248,7 +265,7 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 													</Avatar>
 												)}
 												<div className={`rounded-2xl p-6 shadow-sm max-w-[70%] ${msg.isUser ? 'bg-blue-500 text-white' : 'bg-white'}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
-													<p className="text-xl text-left">{msg.text}</p>
+													<p className="text-xl text-left" dangerouslySetInnerHTML={{ __html: msg.text }}></p>
 													{/* 判断是否为第三次 AI 回复并显示跳转按钮 */}
 													{!msg.isUser && index === thirdResponseIndex && (
 														<Button
@@ -258,14 +275,26 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 															跳转到 智能家居界面
 														</Button>
 													)}
-													{/* 判断是否为第四次 AI 回复并显示跳转按钮 */}
-													{!msg.isUser && responseIndex === 4 && index === messages.length - 1 && (
-														<Button
-															onClick={handleJumpToGarbageInterface2}
-															className="mt-0 ml-4"
-														>
-															跳转到 垃圾界面2
-														</Button>
+													{/* 判断是否为第四次及以后 AI 回复并显示跳转按钮 */}
+													{!msg.isUser && buttonIndices.includes(index) && (
+														<div>
+															{responseIndex === 5 && (
+																<Button
+																	onClick={handleJumpToGarbageInterface2}
+																	className="mt-0 ml-4"
+																>
+																	跳转到 垃圾界面2
+																</Button>
+															)}
+															{responseIndex === 6 && (
+																<Button
+																	onClick={handleJumpToMyHomePage}
+																	className="mt-0 ml-4"
+																>
+																	跳转到 MyHomePage
+																</Button>
+															)}
+														</div>
 													)}
 												</div>
 												{msg.isUser && (
@@ -323,12 +352,11 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 																		setMessages(updatedMessages);
 																		if (responseIndex === 2) {
 																			setThirdResponseIndex(updatedMessages.length - 1);
-																			localStorage.setItem('thirdResponseIndex', (updatedMessages.length - 1).toString());
+																		}
+																		if (responseIndex >= 4) {
+																			setButtonIndices(prevIndices => [...prevIndices, updatedMessages.length - 1]);
 																		}
 																		setResponseIndex(responseIndex + 1);
-																		// 保存更新后的聊天记录和回复索引到 localStorage
-																		localStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
-																		localStorage.setItem('responseIndex', (responseIndex + 1).toString());
 																	}, 500);
 																}
 																return newMessages;
@@ -354,12 +382,11 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 																		setMessages(updatedMessages);
 																		if (responseIndex === 2) {
 																			setThirdResponseIndex(updatedMessages.length - 1);
-																			localStorage.setItem('thirdResponseIndex', (updatedMessages.length - 1).toString());
+																		}
+																		if (responseIndex >= 4) {
+																			setButtonIndices(prevIndices => [...prevIndices, updatedMessages.length - 1]);
 																		}
 																		setResponseIndex(responseIndex + 1);
-																		// 保存更新后的聊天记录和回复索引到 localStorage
-																		localStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
-																		localStorage.setItem('responseIndex', (responseIndex + 1).toString());
 																	}, 500);
 																}
 																return newMessages;
