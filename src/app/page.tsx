@@ -1,7 +1,9 @@
 "use client";
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import App from '../App';
+// 注释原来的 App 导入
+// import App from '../App';
+import AppGarbage from '../AppGarbage'; // 导入 AppGarbage 组件
 
 const Page = () => {
   useEffect(() => {
@@ -10,7 +12,9 @@ const Page = () => {
       const root = ReactDOM.createRoot(rootElement);
       root.render(
         <React.StrictMode>
-          <App />
+          {/* 注释原来的 App 渲染 */}
+          {/* <App /> */}
+          <AppGarbage /> // 渲染 AppGarbage 组件
         </React.StrictMode>
       );
     }
