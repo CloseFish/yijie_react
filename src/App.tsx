@@ -10,7 +10,7 @@ import YijieMainPage from './pages/YijieMainPage'; // 引入 YijieMainPage 组�
 
 const App: React.FC = () => {
 	// 扩展 currentPage 的状态类型，添加 'yijie'
-	const [currentPage, setCurrentPage] = useState<'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'yijie'>('home');
+	const [currentPage, setCurrentPage] = useState<'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'yijie'>('login');
 
 	return (
 		<div className="min-h-screen bg-[#f0f5f0] text-gray-800">

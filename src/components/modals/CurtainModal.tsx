@@ -1,6 +1,5 @@
-// components/modals/CurtainModal.tsx
 import React, { useEffect, useState } from 'react';
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import BaseModal from '../shared/BaseModal'; // 根据实际路径调整
 import Button from "@/components/ui/button";
 
 interface CurtainModalProps {
@@ -30,8 +29,8 @@ const CurtainModal: React.FC<CurtainModalProps> = ({ isOpen, onClose, toggleCurt
 	};
 
 	return (
-		<Dialog open={isOpen} onOpenChange={onClose}>
-			<DialogContent className="bg-[#E0EBE0] p-6 max-w-md mx-auto">
+		<BaseModal isOpen={isOpen} onClose={onClose}>
+			<div className="bg-[#E0EBE0] p-6 max-w-md mx-auto">
 				<div className="w-[360px] p-6 bg-[#E0EBE0] rounded-lg">
 					<h2 className="text-[#1F2937] text-xl font-semibold mb-4">窗帘控制面板</h2>
 					<div className="space-y-6">
@@ -78,8 +77,8 @@ const CurtainModal: React.FC<CurtainModalProps> = ({ isOpen, onClose, toggleCurt
 						</div>
 					</div>
 				</div>
-			</DialogContent>
-		</Dialog>
+			</div>
+		</BaseModal>
 	);
 };
 

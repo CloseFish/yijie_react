@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import BaseModal from '../shared/BaseModal'; // 根据实际路径调整
 import Button from "@/components/ui/button";
 
 interface SmartLockModalProps {
@@ -16,8 +16,8 @@ const SmartLockModal: React.FC<SmartLockModalProps> = ({
 	toggleSmartLock
 }) => {
 	return (
-		<Dialog open={showLockDialog} onOpenChange={setShowLockDialog}>
-			<DialogContent className="bg-[#E0EBE0] p-6 max-w-md mx-auto">
+		<BaseModal isOpen={showLockDialog} onClose={() => setShowLockDialog(false)}>
+			<div className="bg-[#E0EBE0] p-6 max-w-md mx-auto">
 				<h2 className="text-[#1F2937] text-xl font-semibold mb-4">智能门锁控制面板</h2>
 				<div className="space-y-6">
 					<div className="bg-[#1F2937] rounded-lg p-6">
@@ -78,9 +78,9 @@ const SmartLockModal: React.FC<SmartLockModalProps> = ({
 						</div>
 					</Button>
 				</div>
-			</DialogContent>
-		</Dialog>
+			</div>
+		</BaseModal>
 	);
 };
 
-export default SmartLockModal;
+export default SmartLockModal;    

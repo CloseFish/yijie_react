@@ -1,6 +1,36 @@
 import React, { useState } from 'react';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Button from '../ui/button';
+import { useContext } from 'react';
+
+// 假设 DevicePage 的状态和函数可以通过上下文传递
+const DeviceContext = React.createContext({
+	devices: {},
+	setDevices: () => { },
+	isTVModalOpen: false,
+	// 修改为接收布尔参数的函数
+	setIsTVModalOpen: (value: boolean) => { },
+	isFridgeModalOpen: false,
+	setIsFridgeModalOpen: (value: boolean) => { },
+	isLightModalOpen: false,
+	setIsLightModalOpen: (value: boolean) => { },
+	isThermostatModalOpen: false,
+	setIsThermostatModalOpen: (value: boolean) => { },
+	isSpeakerModalOpen: false,
+	setIsSpeakerModalOpen: (value: boolean) => { },
+	isSmartLockModalOpen: false,
+	setIsSmartLockModalOpen: (value: boolean) => { },
+	isCurtainModalOpen: false,
+	setIsCurtainModalOpen: (value: boolean) => { },
+	isHeatingModalOpen: false,
+	setIsHeatingModalOpen: (value: boolean) => { },
+	isFanModalOpen: false,
+	setIsFanModalOpen: (value: boolean) => { },
+	isRiceCookerModalOpen: false,
+	setIsRiceCookerModalOpen: (value: boolean) => { },
+	isWaterHeaterModalOpen: false,
+	setIsWaterHeaterModalOpen: (value: boolean) => { }
+});
 
 interface ChatModalProps {
 	isOpen: boolean;
@@ -16,6 +46,20 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose }) => {
 	]);
 	const [inputValue, setInputValue] = useState('');
 
+	const {
+		setIsTVModalOpen,
+		setIsFridgeModalOpen,
+		setIsLightModalOpen,
+		setIsThermostatModalOpen,
+		setIsSpeakerModalOpen,
+		setIsSmartLockModalOpen,
+		setIsCurtainModalOpen,
+		setIsHeatingModalOpen,
+		setIsFanModalOpen,
+		setIsRiceCookerModalOpen,
+		setIsWaterHeaterModalOpen
+	} = useContext(DeviceContext);
+
 	const handleSend = () => {
 		if (inputValue.trim() === '') return; // 如果输入为空，不发送
 		setMessages([...messages, { text: inputValue, isUser: true }]);
@@ -23,6 +67,45 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose }) => {
 		// 添加自动回复
 		setTimeout(() => {
 			setMessages(prev => [...prev, { text: "好的，请稍候", isUser: false }]);
+			// 根据用户输入打开对应的 Modal
+			switch (inputValue) {
+				case "电视":
+					console.log('Setting TV modal open');
+					setIsTVModalOpen(true);
+					break;
+				case "冰箱":
+					setIsFridgeModalOpen(true);
+					break;
+				case "灯光":
+					setIsLightModalOpen(true);
+					break;
+				case "恒温器":
+					setIsThermostatModalOpen(true);
+					break;
+				case "智能音响":
+					setIsSpeakerModalOpen(true);
+					break;
+				case "智能门锁":
+					setIsSmartLockModalOpen(true);
+					break;
+				case "窗帘":
+					setIsCurtainModalOpen(true);
+					break;
+				case "地暖":
+					setIsHeatingModalOpen(true);
+					break;
+				case "电风扇":
+					setIsFanModalOpen(true);
+					break;
+				case "电饭煲":
+					setIsRiceCookerModalOpen(true);
+					break;
+				case "热水器":
+					setIsWaterHeaterModalOpen(true);
+					break;
+				default:
+					console.log(`未找到对应的设备：${inputValue}`);
+			}
 		}, 700);
 	};
 
@@ -79,4 +162,4 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose }) => {
 	);
 };
 
-export default ChatModal;
+export { ChatModal, DeviceContext };

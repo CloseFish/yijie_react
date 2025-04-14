@@ -75,7 +75,7 @@ const YijieMainPage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) => {
 								<PopoverTrigger isOpen={false} togglePopover={() => { }}>
 									<Avatar className="w-16 h-16 cursor-pointer">
 										<img
-											src="https://ai-public.mastergo.com/ai/img_res/af5dcdcab53701f2b44bcba3d645f12d.jpg"
+											src="/images/MrsLin_35_north.jpg"
 											alt="用户头像"
 										/>
 									</Avatar>
@@ -194,7 +194,7 @@ const YijieMainPage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) => {
 												{msg.isUser && (
 													<Avatar className="w-12 h-12">
 														<img
-															src="https://ai-public.mastergo.com/ai/img_res/af5dcdcab53701f2b44bcba3d645f12d.jpg"
+															src="/images/MrsLin_35_north.jpg"
 															alt="用户头像"
 														/>
 													</Avatar>

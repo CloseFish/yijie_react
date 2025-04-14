@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import BaseModal from '../shared/BaseModal'; // 根据实际路径调整
 import Button from "@/components/ui/button";
 import Slider from "@/components/ui/slider";
 
@@ -46,8 +46,8 @@ const MusicPlayerModal: React.FC<MusicPlayerModalProps> = ({
 	};
 
 	return (
-		<Dialog open={showMusicDialog} onOpenChange={setShowMusicDialog}>
-			<DialogContent className="bg-[#E0EBE0] p-6 max-w-md mx-auto">
+		<BaseModal isOpen={showMusicDialog} onClose={() => setShowMusicDialog(false)}>
+			<div className="bg-[#E0EBE0] p-6 max-w-md mx-auto">
 				<h2 className="text-[#1F2937] text-xl font-semibold mb-4">智能音响控制面板</h2>
 				<div className="space-y-6">
 					{/* 显示屏 */}
@@ -60,8 +60,7 @@ const MusicPlayerModal: React.FC<MusicPlayerModalProps> = ({
 										{playlist.map((song, index) => (
 											<div
 												key={index}
-												className={`p-3 rounded-lg cursor-pointer hover:bg-gray-700 flex items-center justify-between ${currentSong === song ? 'bg-gray-700' : ''
-													}`}
+												className={`p-3 rounded-lg cursor-pointer hover:bg-gray-700 flex items-center justify-between ${currentSong === song ? 'bg-gray-700' : ''}`}
 												onClick={() => {
 													setCurrentSong(song);
 													setShowPlaylist(false);
@@ -101,7 +100,7 @@ const MusicPlayerModal: React.FC<MusicPlayerModalProps> = ({
 					{/* 开关按钮 */}
 					<Button
 						variant="ghost"
-						className="w-full py-6 bg-[#C2DBC2] text-[#2D5A27] hover:bg-[#B2CBB2] text-xl font-bold !rounded-button"
+						className="w-full py-6 bg-[#C2DBC2] text-[#2D5A27] hover:bg-[#B2CBB2] text-xl font-bold!rounded-button"
 						onClick={toggleSpeaker}
 					>
 						<i className={`fas fa-power-off mr-3`}></i>
@@ -129,7 +128,7 @@ const MusicPlayerModal: React.FC<MusicPlayerModalProps> = ({
 					<div className="grid grid-cols-2 gap-4">
 						<Button
 							variant="ghost"
-							className="bg-[#C2DBC2] text-[#2D5A27] hover:bg-[#B2CBB2] !rounded-button py-4"
+							className="bg-[#C2DBC2] text-[#2D5A27] hover:bg-[#B2CBB2]!rounded-button py-4"
 							onClick={() => {
 								const speeds = ['0.5x', '1x', '2x'];
 								const currentIndex = speeds.indexOf(currentSpeed);
@@ -142,7 +141,7 @@ const MusicPlayerModal: React.FC<MusicPlayerModalProps> = ({
 						</Button>
 						<Button
 							variant="ghost"
-							className="bg-[#C2DBC2] text-[#2D5A27] hover:bg-[#B2CBB2] !rounded-button py-4"
+							className="bg-[#C2DBC2] text-[#2D5A27] hover:bg-[#B2CBB2]!rounded-button py-4"
 							onClick={() => {
 								const qualities = ['标准', '无损', '臻品'];
 								const currentIndex = qualities.indexOf(currentQuality);
@@ -157,15 +156,15 @@ const MusicPlayerModal: React.FC<MusicPlayerModalProps> = ({
 					{/* 返回歌单按钮 */}
 					<Button
 						variant="ghost"
-						className="w-full py-6 bg-[#C2DBC2] text-[#2D5A27] hover:bg-[#B2CBB2] text-xl font-bold !rounded-button"
+						className="w-full py-6 bg-[#C2DBC2] text-[#2D5A27] hover:bg-[#B2CBB2] text-xl font-bold!rounded-button"
 						onClick={() => setShowPlaylist(true)}
 					>
 						<i className="fas fa-list-ul mr-3"></i>
 						返回歌单
 					</Button>
 				</div>
-			</DialogContent>
-		</Dialog>
+			</div>
+		</BaseModal>
 	);
 };
 

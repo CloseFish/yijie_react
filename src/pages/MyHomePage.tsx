@@ -14,7 +14,7 @@ import Header from "../components/shared/Header";
 import Sidebar from "../components/shared/Sidebar";
 import PieChart from "../components/charts/PieChart";
 import BarChart from "../components/charts/BarChart";
-import ChatModal from "../components/modals/ChatModal";
+import { ChatModal } from "../components/modals/ChatModal";
 import DeviceControl from "../components/device-controls/DeviceControl";
 import TVModal from "../components/modals/TVModal";
 import FridgeModal from "../components/modals/FridgeModal";
