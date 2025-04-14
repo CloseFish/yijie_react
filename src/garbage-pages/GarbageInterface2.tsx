@@ -87,6 +87,10 @@ const GarbageInterface2: React.FC<GarbageInterface1Props> = ({ setCurrentPage })
 	};
 
 	const [activeCamera, setActiveCamera] = useState("C1");
+	
+	const handleBackToYijie = () => {
+		setCurrentPage('yijie');
+	};
 
 	return (
 		<div className="min-h-screen bg-[#f0f5f0] text-gray-800">
@@ -97,6 +101,14 @@ const GarbageInterface2: React.FC<GarbageInterface1Props> = ({ setCurrentPage })
 					<main className="flex-1 p-6">
 						<div className="flex justify-between items-center mb-6">
 							<h1 className="text-2xl font-bold">我的家</h1>
+							{/* 返回按钮 */}
+							<button
+								className="flex items-center mb-4 text-gray-600 hover:text-gray-800"
+								onClick={handleBackToYijie}
+							>
+								<i className="fa-solid fa-arrow-left mr-2"></i>
+								返回翌界聊天界面
+							</button>
 						</div>
 						<div className="grid grid-cols-3 gap-6 max-w-full">
 							<div className="col-span-2 bg-[#c2dbc2] rounded-lg overflow-hidden">
