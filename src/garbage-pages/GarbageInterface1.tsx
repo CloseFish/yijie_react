@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PageType } from "../types";
+import SmartHomeButton from "../components/SmartHomeButton";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -22,6 +23,10 @@ const GarbageInterface1: React.FC<GarbageInterface1Props> = ({ setCurrentPage })
 	const [isFridgeModalOpen, setIsFridgeModalOpen] = useState(false);
 	const [isLightModalOpen, setIsLightModalOpen] = useState(false);
 	const [isThermostatModalOpen, setIsThermostatModalOpen] = useState(false);
+	const [showSmartHomeButton, setShowSmartHomeButton] = useState(() => {
+		const stored = localStorage.getItem("showSmartHomeButton");
+		return stored ? JSON.parse(stored) : false;
+	});
 
 	const [devices, setDevices] = useState<{
 		[key: string]: boolean;
@@ -47,6 +52,10 @@ const GarbageInterface1: React.FC<GarbageInterface1Props> = ({ setCurrentPage })
 		}
 	});
 
+	useEffect(() => {
+		localStorage.setItem("showSmartHomeButton", JSON.stringify(showSmartHomeButton));
+	}, [showSmartHomeButton]);
+
 	const toggleDevice = (deviceName: string, newValue?: boolean) => {
 		const updatedDevices = {
 			...devices,
@@ -64,17 +73,24 @@ const GarbageInterface1: React.FC<GarbageInterface1Props> = ({ setCurrentPage })
 		setCurrentPage('yijie');
 	};
 
+	const handleSmartHomeClick = () => {
+		setCurrentPage('home');
+	};
+
 	return (
 		<div className="min-h-screen bg-[#f0f5f0] text-gray-800">
 			<main className="flex-1 p-6">
 				{/* 返回按钮 */}
-				<button
-					className="flex items-center mb-4 text-gray-600 hover:text-gray-800"
-					onClick={handleBackToYijie}
-				>
-					<i className="fa-solid fa-arrow-left mr-2"></i>
-					返回翌界聊天界面
-				</button>
+				<div className="flex items-center justify-between mb-4">
+					<button
+						className="flex items-center text-gray-600 hover:text-gray-800"
+						onClick={handleBackToYijie}
+					>
+						<i className="fa-solid fa-arrow-left mr-2"></i>
+						返回翌界聊天界面
+					</button>
+					<SmartHomeButton setCurrentPage={setCurrentPage} />
+				</div>
 				<div className="grid grid-cols-5 mt-6">
 					<div className="bg-[#c2dbc2] p-4 rounded-l-lg">
 						<div className="text-base text-gray-700">电力</div>

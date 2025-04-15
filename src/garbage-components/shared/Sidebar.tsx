@@ -39,7 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage }) => {
 				</Button>
 				<Button
 					variant="ghost"
-					className={`w-full text-left text-lg py-4 ${currentPage === 'garbage3' ? 'text-blue-400' : 'text-gray-600'}`}
+					className={`w-full text-left text-lg py-4 ${currentPage === 'devices' ? 'text-blue-400' : 'text-gray-600'}`}
 					onClick={() => handlePageChange('devices')}
 				>
 					<i className="fas fa-database mr-3 text-lg"></i>

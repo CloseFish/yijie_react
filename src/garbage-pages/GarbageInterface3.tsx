@@ -25,6 +25,7 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy, arrayMove } from '@dnd-kit/sortable';
 import { PageType } from "../types";
+import SmartHomeButton from "../components/SmartHomeButton";
 
 interface GarbageInterface3Props {
 	setCurrentPage: React.Dispatch<React.SetStateAction<PageType>>;
@@ -57,10 +58,16 @@ const GarbageInterface3: React.FC<GarbageInterface3Props> = ({ setCurrentPage })
 
 	const [draggingId, setDraggingId] = useState<string | null>(null);
 
+	const [showSmartHomeButton, setShowSmartHomeButton] = useState(() => {
+		const stored = localStorage.getItem("showSmartHomeButton");
+		return stored ? JSON.parse(stored) : false;
+	});
+
 	useEffect(() => {
 		localStorage.setItem("devicesStatus", JSON.stringify(devices));
 		localStorage.setItem("deviceOrder", JSON.stringify(deviceOrder));
-	}, [devices, deviceOrder]);
+		localStorage.setItem("showSmartHomeButton", JSON.stringify(showSmartHomeButton));
+	}, [devices, deviceOrder, showSmartHomeButton]);
 
 	const toggleDevice = (deviceName: string, newValue?: boolean) => {
 		const updatedDevices = {
@@ -93,10 +100,17 @@ const GarbageInterface3: React.FC<GarbageInterface3Props> = ({ setCurrentPage })
 		}
 	};
 
+	const handleSmartHomeClick = () => {
+		setCurrentPage('home');
+	};
+
 	return (
 		<div className="min-h-screen bg-[#f0f5f0] text-gray-800">
 			<div className="flex-1 p-8">
-				<h1 className="text-2xl font-bold">设备</h1>
+				<div className="flex items-center justify-between mb-4">
+					<h1 className="text-2xl font-bold">设备</h1>
+					<SmartHomeButton setCurrentPage={setCurrentPage} />
+				</div>
 				<div className="grid grid-cols-4 gap-6 mt-6">
 					<DndContext
 						collisionDetection={closestCenter}

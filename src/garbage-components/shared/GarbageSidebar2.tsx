@@ -11,7 +11,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage }) => {
 	const handlePageChange = (page: 'home0' | 'home' | 'analysis' | 'devices' | 'yijie' | 'login' | 'garbage1' | 'garbage2' | 'garbage3') => {
 		// 只有在页面已实现时才切换页面
-		if (['home0', 'garbage'].includes(page)) {
+		if (['home0', 'garbage3'].includes(page)) {
 			setCurrentPage(page);
 		}
 	};

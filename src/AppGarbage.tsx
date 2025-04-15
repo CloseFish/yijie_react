@@ -41,7 +41,7 @@ const AppGarbage: React.FC = () => {
                     <main className="flex-1 p-6">
                         {currentPage === 'home0' && <MyHomePage />}
                         {currentPage === 'home' && <MyHomePage />}
-                        {currentPage === 'garbage3' && <DevicePage />}
+                        {currentPage === 'devices' && <DevicePage />}
                         {currentPage === 'login' && <LoginPage setCurrentPage={setCurrentPage} />}
                         {currentPage === 'analysis' && <AnalysisPage />}
                         {currentPage === 'yijie' && <YijieMainPage setCurrentPage={setCurrentPage} />}
