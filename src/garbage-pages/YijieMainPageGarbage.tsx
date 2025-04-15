@@ -40,6 +40,10 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 		"好的，我将结合大数据，为您生成智能分析界面，同时，您还可以在主页右上方点击输入指令，我会对您的要求进行智能回答。"
 	];
 
+	// 新增状态来控制进度条的显示和进度值
+	const [showProgressBar, setShowProgressBar] = useState(false);
+	const [progress, setProgress] = useState(0);
+
 	useEffect(() => {
 		updateGreeting();
 	}, []);
@@ -114,6 +118,22 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 		localStorage.setItem('chatMessages', JSON.stringify(initialMessages));
 		localStorage.setItem('responseIndex', '0');
 		localStorage.setItem('thirdResponseIndex', 'null');
+	};
+
+	const handleDownload = () => {
+		setShowProgressBar(true);
+		setProgress(0);
+
+		const timer = setInterval(() => {
+			setProgress((prevProgress) => {
+				const newProgress = prevProgress + 1;
+				if (newProgress >= 100) {
+					clearInterval(timer);
+					setShowProgressBar(false);
+				}
+				return newProgress;
+			});
+		}, 50);
 	};
 
 	return (
@@ -207,6 +227,7 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 												variant="ghost"
 												size="icon"
 												className="!rounded-button hover:bg-blue-50 w-16 h-16 flex items-center justify-center"
+												onClick={handleDownload}
 											>
 												<i className="fas fa-download text-gray-600 text-3xl"></i>
 											</Button>
@@ -407,9 +428,17 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 						</div>
 					</div>
 				</div>
+				{showProgressBar && (
+					<div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 bg-white p-4 rounded-md shadow-md">
+						<div className="bg-gray-200 rounded-full h-6 overflow-hidden">
+							<div className="bg-blue-500 h-6 rounded-full" style={{ width: `${progress}%` }}></div>
+						</div>
+						<p className="text-center mt-2">{progress}%</p>
+					</div>
+				)}
 			</div>
 		</div>
 	);
 };
 
-export default YijieMainPageGarbage;
+export default YijieMainPageGarbage;    
