@@ -2,8 +2,8 @@ import React from 'react';
 import Button from '../../components/ui/button';
 
 interface HeaderProps {
-	currentPage: 'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'yijie' | 'garbage1' | 'garbage2';
-	setCurrentPage: React.Dispatch<React.SetStateAction<'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'yijie' | 'garbage1' | 'garbage2'>>;
+	currentPage: 'home' | 'garbage3' | 'analysis' | 'settings' | 'login' | 'smart' | 'yijie' | 'garbage1' | 'garbage2' | 'garbage3';
+	setCurrentPage: React.Dispatch<React.SetStateAction<'home' | 'devices' | 'analysis' | 'settings' | 'login' | 'smart' | 'yijie' | 'garbage1' | 'garbage2' | 'garbage3'>>;
 }
 
 const Header: React.FC<HeaderProps> = ({ currentPage, setCurrentPage }) => {

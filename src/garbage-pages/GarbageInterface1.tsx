@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { PageType } from "../types";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -13,7 +14,7 @@ import LightModal from "../components/modals/LightModal";
 import ThermostatModal from "../components/modals/ThermostatModal";
 
 interface GarbageInterface1Props {
-	setCurrentPage: (page: 'home' | 'yijie' | 'garbage1') => void;
+	setCurrentPage: React.Dispatch<React.SetStateAction<PageType>>;
 }
 
 const GarbageInterface1: React.FC<GarbageInterface1Props> = ({ setCurrentPage }) => {

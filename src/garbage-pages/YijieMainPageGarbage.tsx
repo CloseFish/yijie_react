@@ -6,9 +6,9 @@ import Input from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
-// 修改 setCurrentPage 的参数类型，添加 'garbage1'、'garbage2' 和 'myHomePage'
+// 修改 setCurrentPage 的参数类型，添加 'garbage1' 和 'garbage2'
 interface YijieMainPageProps {
-	setCurrentPage: (page: 'home' | 'yijie' | 'garbage1' | 'garbage2') => void;
+	setCurrentPage: (page: 'home' | 'yijie' | 'garbage1' | 'garbage2' | 'garbage3' | 'analysis') => void;
 }
 
 const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) => {
@@ -16,8 +16,6 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 	const storedMessages = localStorage.getItem('chatMessages');
 	const storedResponseIndex = localStorage.getItem('responseIndex');
 	const storedThirdResponseIndex = localStorage.getItem('thirdResponseIndex');
-	const storedButtonIndices = localStorage.getItem('buttonIndices');
-	const parsedButtonIndices = storedButtonIndices ? JSON.parse(storedButtonIndices) : [];
 
 	const [greeting, setGreeting] = useState<string>("");
 	const [userInput, setUserInput] = useState<string>(""); // 保存输入框内容
@@ -32,7 +30,6 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 	const [thirdResponseIndex, setThirdResponseIndex] = useState<number | null>(
 		storedThirdResponseIndex ? parseInt(storedThirdResponseIndex, 10) : null
 	);
-	const [buttonIndices, setButtonIndices] = useState<number[]>(parsedButtonIndices);
 
 	const aiResponses = [
 		"好的！您希望这个界面包含哪些内容呢？",
@@ -40,19 +37,12 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 		"好的。正在为您生成智能家居界面。",
 		"好的！我将为您在主页轮播家中智能摄像头的实时画面，并对整个房间的耗电量进行实时监控，实现对家庭设备的实时检测与控制。",
 		"好的，我将为您生成设备界面，可以对所有的设备进行便捷操作。",
-		"好的，我将结合大数据，为您生成智能分析界面（生成智能分析界面），同时，您还可以在主页右上方点击输入指令，我会对您的要求进行智能回答。"
+		"好的，我将结合大数据，为您生成智能分析界面，同时，您还可以在主页右上方点击输入指令，我会对您的要求进行智能回答。"
 	];
 
 	useEffect(() => {
 		updateGreeting();
 	}, []);
-
-	useEffect(() => {
-		localStorage.setItem('chatMessages', JSON.stringify(messages));
-		localStorage.setItem('responseIndex', responseIndex.toString());
-		localStorage.setItem('thirdResponseIndex', thirdResponseIndex ? thirdResponseIndex.toString() : 'null');
-		localStorage.setItem('buttonIndices', JSON.stringify(buttonIndices));
-	}, [messages, responseIndex, thirdResponseIndex, buttonIndices]);
 
 	const updateGreeting = () => {
 		const hour = new Date().getHours();
@@ -77,11 +67,12 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 						setMessages(updatedMessages);
 						if (responseIndex === 2) {
 							setThirdResponseIndex(updatedMessages.length - 1);
-						}
-						if (responseIndex >= 4) {
-							setButtonIndices(prevIndices => [...prevIndices, updatedMessages.length - 1]);
+							localStorage.setItem('thirdResponseIndex', (updatedMessages.length - 1).toString());
 						}
 						setResponseIndex(responseIndex + 1);
+						// 保存更新后的聊天记录和回复索引到 localStorage
+						localStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
+						localStorage.setItem('responseIndex', (responseIndex + 1).toString());
 					}, 500);
 				}
 				return newMessages;
@@ -101,9 +92,15 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 		}, 500);
 	};
 
+	const handleJumpToGarbageInterface3 = () => {
+		setTimeout(() => {
+			setCurrentPage('garbage3'); // 0.5秒后跳转到 垃圾界面3
+		}, 500);
+	};
+
 	const handleJumpToMyHomePage = () => {
 		setTimeout(() => {
-			setCurrentPage('home'); // 0.5秒后跳转到 MyHomePage
+			setCurrentPage('analysis'); // 0.5秒后跳转到 好的
 		}, 500);
 	};
 
@@ -114,11 +111,9 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 		setMessages(initialMessages);
 		setResponseIndex(0);
 		setThirdResponseIndex(null);
-		setButtonIndices([]);
 		localStorage.setItem('chatMessages', JSON.stringify(initialMessages));
 		localStorage.setItem('responseIndex', '0');
 		localStorage.setItem('thirdResponseIndex', 'null');
-		localStorage.setItem('buttonIndices', '[]');
 	};
 
 	return (
@@ -149,7 +144,7 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 								<PopoverTrigger isOpen={false} togglePopover={() => { }}>
 									<Avatar className="w-16 h-16 cursor-pointer">
 										<img
-											src="/images/MrsLin_35_north.jpg"
+											src="/images/MissLi_20_south_dog.jpg"
 											alt="用户头像"
 											className="w-[120%] h-[120%] object-cover"
 										/>
@@ -275,32 +270,38 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 															跳转到 智能家居界面
 														</Button>
 													)}
-													{/* 判断是否为第四次及以后 AI 回复并显示跳转按钮 */}
-													{!msg.isUser && buttonIndices.includes(index) && (
-														<div>
-															{responseIndex === 5 && (
-																<Button
-																	onClick={handleJumpToGarbageInterface2}
-																	className="mt-0 ml-4"
-																>
-																	跳转到 垃圾界面2
-																</Button>
-															)}
-															{responseIndex === 6 && (
-																<Button
-																	onClick={handleJumpToMyHomePage}
-																	className="mt-0 ml-4"
-																>
-																	跳转到 MyHomePage
-																</Button>
-															)}
-														</div>
+													{/* 判断是否为第四次 AI 回复并显示跳转按钮 */}
+													{!msg.isUser && responseIndex === 4 && index === messages.length - 1 && (
+														<Button
+															onClick={handleJumpToGarbageInterface2}
+															className="mt-0 ml-4"
+														>
+															跳转到 改进智能家居界面
+														</Button>
+													)}
+													{/* 判断是否为第五次 AI 回复并显示跳转按钮 */}
+													{!msg.isUser && responseIndex === 5 && index === messages.length - 1 && (
+														<Button
+															onClick={handleJumpToGarbageInterface3}
+															className="mt-0 ml-4"
+														>
+															跳转到 设备界面
+														</Button>
+													)}
+													{/* 判断是否为第六次 AI 回复并显示跳转按钮 */}
+													{!msg.isUser && responseIndex === 6 && index === messages.length - 1 && (
+														<Button
+															onClick={handleJumpToMyHomePage}
+															className="mt-0 ml-4"
+														>
+															跳转到 智能分析界面
+														</Button>
 													)}
 												</div>
 												{msg.isUser && (
 													<Avatar className="w-12 h-12">
 														<img
-															src="/images/MrsLin_35_north.jpg"
+															src="/images/MissLi_20_south_dog.jpg"
 															alt="用户头像"
 															className="w-[120%] h-[120%] object-cover"
 														/>
@@ -352,11 +353,12 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 																		setMessages(updatedMessages);
 																		if (responseIndex === 2) {
 																			setThirdResponseIndex(updatedMessages.length - 1);
-																		}
-																		if (responseIndex >= 4) {
-																			setButtonIndices(prevIndices => [...prevIndices, updatedMessages.length - 1]);
+																			localStorage.setItem('thirdResponseIndex', (updatedMessages.length - 1).toString());
 																		}
 																		setResponseIndex(responseIndex + 1);
+																		// 保存更新后的聊天记录和回复索引到 localStorage
+																		localStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
+																		localStorage.setItem('responseIndex', (responseIndex + 1).toString());
 																	}, 500);
 																}
 																return newMessages;
@@ -382,11 +384,12 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
 																		setMessages(updatedMessages);
 																		if (responseIndex === 2) {
 																			setThirdResponseIndex(updatedMessages.length - 1);
-																		}
-																		if (responseIndex >= 4) {
-																			setButtonIndices(prevIndices => [...prevIndices, updatedMessages.length - 1]);
+																			localStorage.setItem('thirdResponseIndex', (updatedMessages.length - 1).toString());
 																		}
 																		setResponseIndex(responseIndex + 1);
+																		// 保存更新后的聊天记录和回复索引到 localStorage
+																		localStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
+																		localStorage.setItem('responseIndex', (responseIndex + 1).toString());
 																	}, 500);
 																}
 																return newMessages;

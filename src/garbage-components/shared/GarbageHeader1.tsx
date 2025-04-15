@@ -1,12 +1,13 @@
 import React from 'react';
 import Button from '../../components/ui/button';
+import { PageType } from '../../types';
 
-interface HeaderProps {
-	currentPage: 'yijie' | 'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'garbage1' | 'garbage2';
-	setCurrentPage: React.Dispatch<React.SetStateAction<'yijie' | 'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'garbage1' | 'garbage2'>>;
+interface GarbageHeader1Props {
+	currentPage: PageType;
+	setCurrentPage: React.Dispatch<React.SetStateAction<PageType>>;
 }
 
-const GarbageHeader1: React.FC<HeaderProps> = ({ currentPage, setCurrentPage }) => {
+const GarbageHeader1: React.FC<GarbageHeader1Props> = ({ currentPage, setCurrentPage }) => {
 	return (
 		<header className="flex flex-col items-center justify-between p-4 border-b border-[#c4b7a6]">
 			{/* 第一行：导航按钮 */}

@@ -11,7 +11,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage }) => {
 	const handlePageChange = (page: 'home0' | 'home' | 'analysis' | 'devices' | 'yijie' | 'login' | 'garbage1' | 'garbage2' | 'garbage3') => {
 		// 只有在页面已实现时才切换页面
-		if (['home', 'devices', 'analysis'].includes(page)) {
+		if (['home0', 'garbage'].includes(page)) {
 			setCurrentPage(page);
 		}
 	};
@@ -31,8 +31,8 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage }) => {
 			<nav className="space-y-6">
 				<Button
 					variant="ghost"
-					className={`w-full text-left text-lg py-6 ${currentPage === 'home' ? 'text-blue-400' : 'text-gray-600'}`}
-					onClick={() => handlePageChange('home')}
+					className={`w-full text-left text-lg py-6 ${currentPage === 'home0' ? 'text-blue-400' : 'text-gray-600'}`}
+					onClick={() => handlePageChange('home0')}
 				>
 					<i className="fas fa-home mr-3 text-lg"></i>
 					我的家
@@ -40,34 +40,10 @@ const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage }) => {
 				<Button
 					variant="ghost"
 					className={`w-full text-left text-lg py-4 ${currentPage === 'garbage3' ? 'text-blue-400' : 'text-gray-600'}`}
-					onClick={() => handlePageChange('devices')}
+					onClick={() => handlePageChange('garbage3')}
 				>
 					<i className="fas fa-database mr-3 text-lg"></i>
 					设备
-				</Button>
-				<Button
-					variant="ghost"
-					className={`w-full text-left text-lg py-4 ${currentPage === 'analysis' ? 'text-blue-400' : 'text-gray-600'}`}
-					onClick={() => setCurrentPage('analysis')}
-				>
-					<i className="fas fa-chart-line mr-3 text-lg"></i>
-					智能分析
-				</Button>
-				<Button
-					variant="ghost"
-					className={`w-full text-left text-lg py-4 'text-gray-600'}`}
-				//	onClick={() => setCurrentPage('history')}
-				>
-					<i className="fas fa-history mr-3 text-lg"></i>
-					历史数据
-				</Button>
-				<Button
-					variant="ghost"
-					className={`w-full text-left text-lg py-4 'text-gray-600'}`}
-				//	onClick={() => setCurrentPage('settings')}
-				>
-					<i className="fas fa-cog mr-3 text-lg"></i>
-					设置
 				</Button>
 			</nav>
 		</aside>

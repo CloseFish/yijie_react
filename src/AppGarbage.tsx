@@ -2,37 +2,52 @@ import React, { useState } from 'react';
 import MyHomePage from './garbage-pages/MyHomePage';
 import DevicePage from './garbage-pages/DevicePage';
 import LoginPage from './pages/LoginPage';
-import AnalysisPage from './pages/AnalysisPage';
-import SmartPage from './garbage-pages/SmartPage';
+import AnalysisPage from './garbage-pages/AnalysisPage';
+import GarbageHeader1 from "./garbage-components/shared/GarbageHeader1";
+import GarbageSidebar2 from "./garbage-components/shared/GarbageSidebar2";
 import Sidebar from './garbage-components/shared/Sidebar';
 import Header from './garbage-components/shared/Header';
 import YijieMainPage from './garbage-pages/YijieMainPageGarbage';
 import GarbageInterface1 from './garbage-pages/GarbageInterface1';
-import GarbageInterface2 from './garbage-pages/GarbageInterface2'; 
+import GarbageInterface2 from './garbage-pages/GarbageInterface2';
+import GarbageInterface3 from './garbage-pages/GarbageInterface3';
+import { PageType } from './types';
 
 const AppGarbage: React.FC = () => {
-    // 扩展 currentPage 的状态类型，添加 'yijie'
-    const [currentPage, setCurrentPage] = useState<'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'yijie' | 'garbage1' | 'garbage2'>('yijie');
+    const [currentPage, setCurrentPage] = useState<PageType>('yijie');
 
-    // 判断是否显示 Sidebar 和 Header
     const shouldShowSidebarAndHeader = ['home', 'devices', 'analysis'].includes(currentPage);
+
+    const getHeaderComponent = () => {
+        if (currentPage === 'home0' || currentPage === 'garbage3') {
+            return <GarbageHeader1 currentPage={currentPage} setCurrentPage={setCurrentPage} />;
+        }
+        return shouldShowSidebarAndHeader && <Header currentPage={currentPage} setCurrentPage={setCurrentPage} />;
+    };
+
+    const getSidebarComponent = () => {
+        if (currentPage === 'home0' || currentPage === 'garbage3') {
+            return <GarbageSidebar2 currentPage={currentPage} setCurrentPage={setCurrentPage} />;
+        }
+        return shouldShowSidebarAndHeader && <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} />;
+    };
 
     return (
         <div className="min-h-screen bg-[#f0f5f0] text-gray-800">
             <div className="w-[1440px] mx-auto min-h-[1024px] p-6">
-                {shouldShowSidebarAndHeader && <Header currentPage={currentPage} setCurrentPage={setCurrentPage} />}
+                {getHeaderComponent()}
                 <div className="flex">
-                    {shouldShowSidebarAndHeader && <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} />}
+                    {getSidebarComponent()}
                     <main className="flex-1 p-6">
+                        {currentPage === 'home0' && <MyHomePage />}
                         {currentPage === 'home' && <MyHomePage />}
-                        {currentPage === 'devices' && <DevicePage />}
+                        {currentPage === 'garbage3' && <DevicePage />}
                         {currentPage === 'login' && <LoginPage setCurrentPage={setCurrentPage} />}
                         {currentPage === 'analysis' && <AnalysisPage />}
-                        {currentPage === 'smart' && <SmartPage setCurrentPage={setCurrentPage} />}
                         {currentPage === 'yijie' && <YijieMainPage setCurrentPage={setCurrentPage} />}
-                        {/* 其他页面 */}
                         {currentPage === 'garbage1' && <GarbageInterface1 setCurrentPage={setCurrentPage} />}
-                        {currentPage === 'garbage2' && <GarbageInterface2 setCurrentPage={setCurrentPage} />} {/* 添加垃圾界面2的显示逻辑 */}
+                        {currentPage === 'garbage2' && <GarbageInterface2 setCurrentPage={setCurrentPage} />}
+                        {currentPage === 'garbage3' && <GarbageInterface3 setCurrentPage={setCurrentPage} />}
                     </main>
                 </div>
             </div>
@@ -40,4 +55,4 @@ const AppGarbage: React.FC = () => {
     );
 };
 
-export default AppGarbage;    
+export default AppGarbage;

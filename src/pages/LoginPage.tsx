@@ -2,18 +2,18 @@ import React from 'react';
 import Input from "@/components/ui/input";
 import Button from "@/components/ui/button";
 import Checkbox from "@/components/ui/checkbox";
+import { PageType } from '../types';
 
 interface LoginPageProps {
-	setCurrentPage: (page: 'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'yijie') => void;
+	setCurrentPage: (page: PageType) => void;
 }
 
 const LoginPage: React.FC<LoginPageProps> = ({ setCurrentPage }) => {
 	const backgroundImage = 'https://ai-public.mastergo.com/ai/img_res/aa11ce87faf94db7f32b14695b14b604.jpg';
 
 	const handleLogin = () => {
-		// 这里可以添加登录验证逻辑
 		setTimeout(() => {
-			setCurrentPage('yijie'); // 0.5秒后跳转到主页面
+			setCurrentPage('yijie');
 		}, 500);
 	};
 
@@ -71,7 +71,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setCurrentPage }) => {
 								记住密码
 							</label>
 						</div>
-						<Button 
+						<Button
 							onClick={handleLogin}
 							className="w-full !rounded-button bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xl py-8 transition-colors duration-200"
 						>

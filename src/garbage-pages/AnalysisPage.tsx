@@ -123,8 +123,7 @@ const AnalysisPage: React.FC = () => {
 					{/* 主要内容区域 */}
 					<main className="flex-1 p-6 bg-[#F0F5F0]">
 						<div className="mb-8">
-							<h1 className="text-2xl font-bold mb-6 text-[#1F2937]">智能分析</h1>
-							
+							<h2 className="text-2xl font-bold mb-6 text-[#1F2937]">智能分析</h2>
 							<Card className="bg-[#C2DBC2] p-6 border-none">
 								<div className="flex items-center justify-between mb-6">
 									<h3 className="text-xl font-semibold">能源消耗</h3>

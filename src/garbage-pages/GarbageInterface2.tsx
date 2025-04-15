@@ -16,12 +16,13 @@ import TVModal from "../components/modals/TVModal";
 import FridgeModal from "../components/modals/FridgeModal";
 import LightModal from "../components/modals/LightModal";
 import ThermostatModal from "../components/modals/ThermostatModal";
+import { PageType } from "../types"; // 引入公共类型定义
 
-interface GarbageInterface1Props {
-	setCurrentPage: React.Dispatch<React.SetStateAction<'yijie' | 'home' | 'devices' | 'analysis' | 'history' | 'settings' | 'login' | 'smart' | 'garbage1' | 'garbage2'>>;
+interface GarbageInterface2Props {
+	setCurrentPage: React.Dispatch<React.SetStateAction<PageType>>; // 更新类型定义
 }
 
-const GarbageInterface2: React.FC<GarbageInterface1Props> = ({ setCurrentPage }) => {
+const GarbageInterface2: React.FC<GarbageInterface2Props> = ({ setCurrentPage }) => {
 	const [isTVModalOpen, setIsTVModalOpen] = useState(false);
 	const [isFridgeModalOpen, setIsFridgeModalOpen] = useState(false);
 	const [isLightModalOpen, setIsLightModalOpen] = useState(false);
@@ -103,7 +104,7 @@ const GarbageInterface2: React.FC<GarbageInterface1Props> = ({ setCurrentPage })
 							<h1 className="text-2xl font-bold">我的家</h1>
 							{/* 返回按钮 */}
 							<button
-								className="flex items-center mb-4 text-gray-600 hover:text-gray-800"
+								className="flex items-center text-gray-600 hover:text-gray-800"
 								onClick={handleBackToYijie}
 							>
 								<i className="fa-solid fa-arrow-left mr-2"></i>
