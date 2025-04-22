@@ -28,7 +28,7 @@ const ThermostatModal: React.FC<ThermostatModalProps> = ({ isOpen, onClose, isTh
 					<div className="bg-[#C2DBC2] p-4 rounded-lg space-y-4">
 						<div className="flex justify-between items-center">
 							<span className="text-[#2D5A27] text-lg">室内温度</span>
-							<span className="text-4xl font-bold text-[#2D5A27]">{temperature}°C</span>
+							<span className="text-4xl font-bold text-[#2D5A27]">28°C</span>
 						</div>
 						<div id="thermostatStatus" className="grid grid-cols-3 gap-2 text-sm">
 							<div

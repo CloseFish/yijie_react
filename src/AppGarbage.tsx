@@ -43,7 +43,7 @@ const AppGarbage: React.FC = () => {
                         {currentPage === 'home' && <MyHomePage />}
                         {currentPage === 'devices' && <DevicePage />}
                         {currentPage === 'login' && <LoginPage setCurrentPage={setCurrentPage} />}
-                        {currentPage === 'analysis' && <AnalysisPage />}
+                        {currentPage === 'analysis' && <AnalysisPage setCurrentPage={setCurrentPage} />}
                         {currentPage === 'yijie' && <YijieMainPage setCurrentPage={setCurrentPage} />}
                         {currentPage === 'garbage1' && <GarbageInterface1 setCurrentPage={setCurrentPage} />}
                         {currentPage === 'garbage2' && <GarbageInterface2 setCurrentPage={setCurrentPage} />}

@@ -63,6 +63,10 @@ const GarbageInterface3: React.FC<GarbageInterface3Props> = ({ setCurrentPage })
 		return stored ? JSON.parse(stored) : false;
 	});
 
+	const handleBackToYijie = () => {
+		setCurrentPage('yijie');
+	};
+
 	useEffect(() => {
 		localStorage.setItem("devicesStatus", JSON.stringify(devices));
 		localStorage.setItem("deviceOrder", JSON.stringify(deviceOrder));
@@ -108,7 +112,16 @@ const GarbageInterface3: React.FC<GarbageInterface3Props> = ({ setCurrentPage })
 		<div className="min-h-screen bg-[#f0f5f0] text-gray-800">
 			<div className="flex-1 p-8">
 				<div className="flex items-center justify-between mb-4">
-					<h1 className="text-2xl font-bold">设备</h1>
+					<div className="flex items-center">
+						<h1 className="text-2xl font-bold">设备</h1>
+						<button
+							className="flex items-center text-gray-600 hover:text-gray-800 ml-4"
+							onClick={handleBackToYijie}
+						>
+							<i className="fa-solid fa-arrow-left mr-2"></i>
+							返回翌界聊天界面
+						</button>
+					</div>
 					<SmartHomeButton setCurrentPage={setCurrentPage} />
 				</div>
 				<div className="grid grid-cols-4 gap-6 mt-6">

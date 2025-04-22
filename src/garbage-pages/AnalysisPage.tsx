@@ -7,6 +7,7 @@ import Button from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Progress from "@/components/ui/progess";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { PageType } from "../types";
 
 // 修改 SelectTriggerProps 接口，添加 onClick 属性
 interface SelectTriggerProps {
@@ -15,10 +16,18 @@ interface SelectTriggerProps {
 	onClick?: () => void;
 }
 
-const AnalysisPage: React.FC = () => {
+interface AnalysisPageProps {
+	setCurrentPage: React.Dispatch<React.SetStateAction<PageType>>;
+}
+
+const AnalysisPage: React.FC<AnalysisPageProps> = ({ setCurrentPage }) => {
 	const chartRef = useRef<HTMLDivElement>(null);
 	const [selectedValue, setSelectedValue] = useState('thisMonth'); // 用于存储选中的值
 	const [isOpen, setIsOpen] = useState(false); // 用于控制下拉内容的显示状态
+
+	const handleBackToYijie = () => {
+		setCurrentPage('yijie');
+	};
 
 	useEffect(() => {
 		if (chartRef.current) {
@@ -123,8 +132,17 @@ const AnalysisPage: React.FC = () => {
 					{/* 主要内容区域 */}
 					<main className="flex-1 p-6 bg-[#F0F5F0]">
 						<div className="mb-8">
-							<h2 className="text-2xl font-bold mb-6 text-[#1F2937]">智能分析</h2>
-							<Card className="bg-[#C2DBC2] p-6 border-none">
+							<div className="flex items-center justify-between">
+								<h2 className="text-2xl font-bold text-[#1F2937]">智能分析</h2>
+								<button
+									className="flex items-center text-gray-600 hover:text-gray-800"
+									onClick={handleBackToYijie}
+								>
+									<i className="fa-solid fa-arrow-left mr-2"></i>
+									返回翌界聊天界面
+								</button>
+							</div>
+							<Card className="bg-[#C2DBC2] p-6 border-none mt-6">
 								<div className="flex items-center justify-between mb-6">
 									<h3 className="text-xl font-semibold">能源消耗</h3>
 									<Select defaultValue={selectedValue}>
