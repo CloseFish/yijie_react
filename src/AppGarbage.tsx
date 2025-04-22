@@ -34,11 +34,11 @@ const AppGarbage: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-[#f0f5f0] text-gray-800">
-            <div className="w-[1440px] mx-auto min-h-[1024px] p-6">
+            <div className="min-h-screen">
                 {getHeaderComponent()}
                 <div className="flex">
                     {getSidebarComponent()}
-                    <main className="flex-1 p-6">
+                    <main className="flex-1">
                         {currentPage === 'home0' && <MyHomePage />}
                         {currentPage === 'home' && <MyHomePage />}
                         {currentPage === 'devices' && <DevicePage />}

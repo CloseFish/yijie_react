@@ -174,8 +174,8 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                 </style>
                 <div className="flex h-full relative justify-center items-center">
                     {/* 左侧导航栏 */}
-                    <div className="fixed left-6 top-1/2 -translate-y-1/2 w-[100px] bg-white shadow-lg flex flex-col items-center py-8 rounded-2xl space-y-8">
-                        <div className="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors">
+                    <div className="fixed left-6 top-1/2 -translate-y-1/2 w-[80px] bg-white shadow-lg flex flex-col items-center py-4 rounded-2xl space-y-6">
+                        <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors">
                             <img
                                 src="/icons/yijie_logo.svg"
                                 alt="翌界 logo"
@@ -185,7 +185,7 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                         <div className="relative">
                             <Popover>
                                 <PopoverTrigger isOpen={false} togglePopover={() => { }}>
-                                    <Avatar className="w-16 h-16 cursor-pointer">
+                                    <Avatar className="w-12 h-12 cursor-pointer">
                                         <img
                                             src="/images/MissLi_20_south_dog.jpg"
                                             alt="用户头像"
@@ -214,17 +214,17 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                                 </PopoverContent>
                             </Popover>
                         </div>
-                        <div className="flex-1 flex flex-col gap-6 justify-center">
+                        <div className="flex-1 flex flex-col gap-4 justify-center">
                             <TooltipProvider>
                                 <Tooltip content="添加新会话">
                                     <TooltipTrigger>
                                         <Button
                                             variant="ghost"
                                             size="icon"
-                                            className="!rounded-button hover:bg-blue-50 w-16 h-16 flex items-center justify-center"
+                                            className="!rounded-button hover:bg-blue-50 w-12 h-12 flex items-center justify-center"
                                             onClick={handleNewConversation}
                                         >
-                                            <i className="fas fa-plus text-gray-600 text-3xl"></i>
+                                            <i className="fas fa-plus text-gray-600 text-2xl"></i>
                                         </Button>
                                     </TooltipTrigger>
                                 </Tooltip>
@@ -233,9 +233,9 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                                         <Button
                                             variant="ghost"
                                             size="icon"
-                                            className="!rounded-button hover:bg-blue-50 w-16 h-16 flex items-center justify-center"
+                                            className="!rounded-button hover:bg-blue-50 w-12 h-12 flex items-center justify-center"
                                         >
-                                            <i className="fas fa-history text-gray-600 text-3xl"></i>
+                                            <i className="fas fa-history text-gray-600 text-2xl"></i>
                                         </Button>
                                     </TooltipTrigger>
                                 </Tooltip>
@@ -249,10 +249,10 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                                             <Button
                                                 variant="ghost"
                                                 size="icon"
-                                                className="!rounded-button hover:bg-blue-50 w-16 h-16 flex items-center justify-center"
+                                                className="!rounded-button hover:bg-blue-50 w-12 h-12 flex items-center justify-center"
                                                 onClick={handleDownload}
                                             >
-                                                <i className="fas fa-download text-gray-600 text-3xl"></i>
+                                                <i className="fas fa-download text-gray-600 text-2xl"></i>
                                             </Button>
                                         </TooltipTrigger>
                                     </Tooltip>
@@ -274,7 +274,7 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                     <div className="flex-1 flex flex-col pl-20 h-full">
                         <div className="text-center mb-12 mt-20">
                             <h1
-                                className="text-[60px] font-bold mb-6"
+                                className="text-[100px] font-bold mb-6"
                                 style={{
                                     fontFamily: 'DingTalkProgress, sans-serif',
                                     textShadow: '0 2px 4px rgba(0,0,0,0.1)',
@@ -289,27 +289,27 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                             </h1>
                             <p className="text-gray-600 mb-12 text-2xl">{greeting}</p>
                             <div className="flex flex-col items-center justify-center h-full pb-6">
-                                <div className="w-3/4 bg-blue-200/50 rounded-t-3xl p-8 shadow-[0_0_30px_rgba(59,130,246,0.3)] border border-blue-300 h-[700px] overflow-auto flex flex-col justify-between">
+                                <div className="w-1/2 bg-blue-200/50 rounded-t-3xl p-4 shadow-[0_0_30px_rgba(59,130,246,0.3)] border border-blue-300 h-[500px] overflow-auto flex flex-col justify-between">
                                     {/* 对话区域 */}
-                                    <div className="flex flex-col gap-4 overflow-y-auto flex-1">
+                                    <div className="flex flex-col gap-3 overflow-y-auto flex-1">
                                         {/* 消息列表 */}
                                         {messages.map((msg, index) => (
-                                            <div key={index} className={`flex gap-4 ${msg.isUser ? 'justify-end' : ''}`}>
+                                            <div key={index} className={`flex gap-3 ${msg.isUser ? 'justify-end' : ''}`}>
                                                 {!msg.isUser && (
-                                                    <Avatar className="w-12 h-12">
+                                                    <Avatar className="w-10 h-10">
                                                         <img
                                                             src="https://ai-public.mastergo.com/ai/img_res/40498f8a432cce37978cd3df80f9db7e.jpg"
                                                             alt="AI头像"
                                                         />
                                                     </Avatar>
                                                 )}
-                                                <div className={`rounded-2xl p-6 shadow-sm max-w-[70%] ${msg.isUser ? 'bg-blue-500 text-white' : 'bg-white'}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
-                                                    <p className="text-xl text-left" dangerouslySetInnerHTML={{ __html: msg.text }}></p>
+                                                <div className={`rounded-2xl p-4 shadow-sm max-w-[70%] ${msg.isUser ? 'bg-blue-500 text-white' : 'bg-white'}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
+                                                    <p className="text-lg text-left" dangerouslySetInnerHTML={{ __html: msg.text }}></p>
                                                     {/* 判断是否为第三次 AI 回复并显示跳转按钮 */}
                                                     {!msg.isUser && index === thirdResponseIndex && (
                                                         <Button
                                                             onClick={handleJumpToGarbageInterface1}
-                                                            className="mt-0 ml-4"
+                                                            className="mt-0 ml-3 text-sm px-2 py-1"
                                                         >
                                                             跳转到 智能家居界面
                                                         </Button>
@@ -318,7 +318,7 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                                                     {!msg.isUser && responseIndex === 4 && index === messages.length - 1 && (
                                                         <Button
                                                             onClick={handleJumpToGarbageInterface2}
-                                                            className="mt-0 ml-4"
+                                                            className="mt-0 ml-3 text-sm px-2 py-1"
                                                         >
                                                             跳转到 改进智能家居界面
                                                         </Button>
@@ -327,7 +327,7 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                                                     {!msg.isUser && responseIndex === 5 && index === messages.length - 1 && (
                                                         <Button
                                                             onClick={handleJumpToGarbageInterface3}
-                                                            className="mt-0 ml-4"
+                                                            className="mt-0 ml-3 text-sm px-2 py-1"
                                                         >
                                                             跳转到 设备界面
                                                         </Button>
@@ -336,14 +336,14 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                                                     {!msg.isUser && responseIndex === 6 && index === messages.length - 1 && (
                                                         <Button
                                                             onClick={handleJumpToMyHomePage}
-                                                            className="mt-0 ml-4"
+                                                            className="mt-0 ml-3 text-sm px-2 py-1"
                                                         >
                                                             跳转到 智能分析界面
                                                         </Button>
                                                     )}
                                                 </div>
                                                 {msg.isUser && (
-                                                    <Avatar className="w-12 h-12">
+                                                    <Avatar className="w-10 h-10">
                                                         <img
                                                             src="/images/MissLi_20_south_dog.jpg"
                                                             alt="用户头像"
@@ -361,7 +361,7 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                                     <div>
                                         <div className="relative mb-8">
                                             <input
-                                                className="bg-white text-2xl py-6 rounded-xl border-2 border-gray-100 w-full pl-4 pr-36"
+                                                className="bg-white text-xl py-4 rounded-xl border-2 border-gray-100 w-full pl-4 pr-36"
                                                 placeholder="请输入你想要的界面设计风格..."
                                                 type="text"
                                                 value={userInput}
@@ -371,7 +371,7 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                                                 }}
                                             />
                                             <Button
-                                                className="!rounded-xl whitespace-nowrap bg-blue-500 hover:bg-blue-600 text-white absolute right-2 top-1/2 -translate-y-1/2 py-4 px-8 text-xl"
+                                                className="!rounded-xl whitespace-nowrap bg-blue-500 hover:bg-blue-600 text-white absolute right-2 top-1/2 -translate-y-1/2 py-3 px-8 text-lg"
                                                 style={{
                                                     top: '50%',
                                                     bottom: 'auto',
@@ -389,7 +389,7 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                                                     <Button
                                                         key={i}
                                                         variant="outline"
-                                                        className="bg-white/80 hover:bg-blue-50 rounded-xl py-4 px-10 text-xl w-[240px]"
+                                                        className="bg-white/80 hover:bg-blue-50 rounded-xl py-3 px-6 text-lg w-1/3 whitespace-nowrap"
                                                         onClick={() => {
                                                             setMessages((prev) => {
                                                                 const newMessages = [...prev, { text: style, isUser: true }];
@@ -420,7 +420,7 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                                                     <Button
                                                         key={i + 3}
                                                         variant="outline"
-                                                        className="bg-white/80 hover:bg-blue-50 rounded-xl py-4 px-10 text-xl w-[240px]"
+                                                        className="bg-white/80 hover:bg-blue-50 rounded-xl py-3 px-6 text-lg w-1/3 whitespace-nowrap"
                                                         onClick={() => {
                                                             setMessages((prev) => {
                                                                 const newMessages = [...prev, { text: style, isUser: true }];
@@ -445,7 +445,7 @@ const YijieMainPageGarbage: React.FC<YijieMainPageProps> = ({ setCurrentPage }) 
                                                         {style}
                                                     </Button>
                                                 ))}
-                                            </div>
+                                            </div>    
                                         </div>
                                     </div>
                                 </div>
